@@ -9,36 +9,74 @@ import {
   Text,
   useColorScheme,
   View,
+  Alert
 } from 'react-native';
 
 import CalButton from './CalButton'
+import {calculateResult, isOperator, unclickable} from './Util'
 
 const list = [
   ["C","AC","(",")","S"],
   [7,8,9,"+","P"],
   [4,5,6,"-","C"],
   [1,2,3,"×","π"],
-  [0," ","=","÷","H"],
+  [0,".","=","÷","H"],
 ]
 export default function App(){
   //double map + 컴포넌트에 key 활용
-  const [result, setresult] = useState(0)
+  const [result, setResult] = useState(0)
+  const [unit, setUnit] = useState({firstnum:"", lastnum:"", operator:""})
   
+  //이런식으로 놔두면 렌더링 될 때마다 초기화
+  //계산 결과 저장
+  const history = []
+  const createUnclickableDialog = () =>
+    Alert.alert(
+      "Unclickable",
+      "don't click this button",
+      [
+        {
+          text: "OK",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+      ]
+    );
   //이거 모듈화 하자
   //string 연산 알고리즘 구현
   handleresultString = (data) => {
+    console.log(unit)
+    //.여러개 방지
     //왜 switchcase 문으로는 filtering이 안될까
     if(data == "C"){
-      setresult(0)
+      setResult(0)
     }else if(data=="AC"){
-      setresult(0)
-    }else if(data=="AC"){
-      setresult(0)
+      setResult(0)
+      setUnit(prevState => {return{...prevState, firstnum: "", operator: "",lastnum:""}})
+    }else if(isOperator(data)){
+      if(unit.firstnum==""){
+        setUnit(prevState => {return{...prevState,firstnum:result,operator: data, lastnum:""}})
+        console.log(unit)
+        setResult(0)
+      }
+      
+      else{
+        setUnit(prevState =>{return{...prevState, lastnum:result}})
+        temp = calculateResult(unit).toString()
+        setResult(temp)
+        console.log(unit)
+        unit.firstnum = temp
+        unit.operator = (data != "=") ? data : ""
+        unit.lastnum = ""
+      }
+      
+    }else if(unclickable(data)){
+      createUnclickableDialog()
     }else{
-      if(result == "0"){
-        setresult(data.toString())
+      if(result == "0"&&data !="."){
+        setResult(data.toString())
       }else{
-        setresult(result.toString().concat(data))
+        setResult(result.toString().concat(data))
       }
     }
   }
@@ -91,12 +129,12 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   resultContainer: {
-    flex: 2,
-    justifyContent: 'center',
+    flex: 2.5,
+    justifyContent: 'flex-end',
     backgroundColor: '#4CC9F6',
   },
   buttonContainer: {
-    flex: 8,
+    flex: 7.5,
     backgroundColor: '#2B697F',
   },
   resultText: {
