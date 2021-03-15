@@ -19,9 +19,11 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-function Button({value}){
+function CalButton({value,setresult}){
+  const onPress = () => handleOnPress(value)
+
     return(
-        <TouchableOpacity  style={styles.container}>
+        <TouchableOpacity  style={styles.container} onPress={()=>setresult(value)}>
             <Text  style={styles.text}>
                 {value}
             </Text>
@@ -42,4 +44,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default Button
+export default CalButton
