@@ -33,7 +33,10 @@ export default function App(){
     const renderButtonLayout = list.map((row, index)=>{
       const renderRow = row.map((button,index)=>{
         return(  
-        <CalButton value = {button} key = {"btn-"+index} setresult ={setresult}>
+        <CalButton 
+          value = {button} 
+          key = {"btn-"+index} 
+          handleOnPress = {handleOnPress}>
         </CalButton>)
       })
       return(

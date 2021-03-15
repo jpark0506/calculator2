@@ -19,12 +19,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-function CalButton({value,setresult}){
-  const onPress = () => handleOnPress(value)
+// props 비구조화 할당
+function CalButton({value,handleOnPress}){
 
     return(
-        <TouchableOpacity  style={styles.container} onPress={()=>setresult(value)}>
-            <Text  style={styles.text}>
+        <TouchableOpacity  style={styles.container} onPress={()=>handleOnPress(value)}>
+            <Text style={styles.text}>
                 {value}
             </Text>
         </TouchableOpacity>
