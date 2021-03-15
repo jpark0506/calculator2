@@ -11,14 +11,6 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 // props 비구조화 할당
 function CalButton({value,handleOnPress}){
 
