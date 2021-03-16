@@ -1,6 +1,6 @@
 
 
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import CalButton from './CalButton'
-import {calculateResult, isOperator, unclickable} from './Util'
+import {calculateResult, isOperator, unclickable, createUnclickableDialog} from './Util'
 
 const list = [
   ["C","AC","(",")","S"],
@@ -25,49 +25,53 @@ const list = [
 export default function App(){
   //double map + 컴포넌트에 key 활용
   const [result, setResult] = useState(0)
-  const [unit, setUnit] = useState({firstnum:"", lastnum:"", operator:""})
-  
+  const [unit, setUnit] = useState({firstnum:"", lastnum:"", operator:"",secondop:""})
+
+  //useState의 비동기적 처리 때문에 기존에 java나 C++에서 하던 것 처럼 바로 정확한 연산 결과를 받기 어려움
+  //useEffect를 이용해서 unit 값이 변경 될 때마다 사용자가 결과를 원하는 지 판단한 후 연산 진행
+  useEffect(() => {
+    console.log(unit)
+    if(unit.operator!=""&&unit.lastnum!="")
+    {
+      let re =  calculateResult(unit)
+      if(unit.secondop!="="){
+        let operator = unit.secondop
+        console.log("calculated result"+re)
+        setResult(re)
+        setUnit(prevState => {return{...prevState,firstnum:re,operator:operator,lastnum:"",secondop:""}})
+      }else if(unit.secondop=="="){
+        console.log("calculated result"+re)
+        setResult(re)
+        setUnit(prevState => {return{...prevState,firstnum:re,operator:"",lastnum:"",secondop:""}})
+      }
+      
+    }
+  }, [unit])
   //이런식으로 놔두면 렌더링 될 때마다 초기화
   //계산 결과 저장
   const history = []
-  const createUnclickableDialog = () =>
-    Alert.alert(
-      "Unclickable",
-      "don't click this button",
-      [
-        {
-          text: "OK",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-      ]
-    );
+  
   //이거 모듈화 하자
   //string 연산 알고리즘 구현
   handleresultString = (data) => {
-    console.log(unit)
     //.여러개 방지
     //왜 switchcase 문으로는 filtering이 안될까
     if(data == "C"){
       setResult(0)
     }else if(data=="AC"){
       setResult(0)
-      setUnit(prevState => {return{...prevState, firstnum: "", operator: "",lastnum:""}})
+      setUnit(prevState => {return{...prevState, firstnum: "", operator: "",lastnum:"",secondop:""}})
     }else if(isOperator(data)){
-      if(unit.firstnum==""){
-        setUnit(prevState => {return{...prevState,firstnum:result,operator: data, lastnum:""}})
-        console.log(unit)
+      if(unit.operator==""){
+        setUnit(prevState => {return{...prevState,firstnum:result,operator: data, lastnum:"",secondop:""}})
         setResult(0)
       }
-      
-      else{
-        setUnit(prevState =>{return{...prevState, lastnum:result}})
-        temp = calculateResult(unit).toString()
-        setResult(temp)
-        console.log(unit)
-        unit.firstnum = temp
-        unit.operator = (data != "=") ? data : ""
-        unit.lastnum = ""
+      else if(unit.operator!=""&&data!="="){
+        setUnit(prevState =>{return{...prevState, lastnum:result, secondop:data}},)
+        setResult(0)
+      }else if(unit.operator!=""&&data=="="){
+        setUnit(prevState =>{return{...prevState, lastnum:result, secondop:data}},)
+        
       }
       
     }else if(unclickable(data)){
