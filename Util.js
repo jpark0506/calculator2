@@ -1,4 +1,5 @@
 import {Alert} from 'react-native'
+import {calculateCombination, calculateCombinationwithRepetition, calculatePermutation, calculatePermutationwithRepetition} from './CalUtils'
 export function calculateResult(unit){
     //toFixed(args) == 소수점 처리
     if(unit.operator == "+"){
@@ -20,27 +21,61 @@ export function calculateResult(unit){
     }
     return result
 }
-export const factorial = (data) =>{
-    const result=1;
-    for(i=1; i<=data; i++){
-        result = result*i;
+
+export function checkHasString(data){
+    const op = ["P","C","S","H","π"]
+    let index=0;
+    let result = data;
+    for(operator of op){
+        index= data.toString().indexOf(operator)
+        if(index != -1){
+            break;
+        }
+    }
+      if(index>0 && index != data.length-1 && index!=-1){
+          if(data[index] == 'P'){
+            //일부러 명시적 typecasting 사용
+              result = calculatePermutation(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
+              if(result ==-2){
+                  createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
+                  result = data
+              }
+             
+          }
+          else if(data[index] == 'C'){
+            result = calculateCombination(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
+            if(result ==-2){
+                createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
+                result = data
+            }
+          }
+          else if(data[index] == 'S'){
+            
+          }
+          else if(data[index] == 'H'){
+            result = calculateCombinationwithRepetition(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
+            if(result ==-2){
+                createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
+                result = data
+            }
+            
+          }
+          else if(data[index] == 'π'){
+            result = calculatePermutationwithRepetition(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
+            if(result ==-2){
+                createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
+                result = data
+            }
+          }
+        }else if(index==0 ||data.length-1 == index && index!=-1){
+          console.log("this operator has to be in the middle")
+        }else if(index == -1){
+          console.log("doesn't have operator")
     }
     return result;
-}
-   
-export const calculatePermutation = (first, last) => {
-    let result = 1
-    console.log("first : "+first,"last : "+last)
-    if(first>last){
-        result = factorial(first)/factorial(first-last)
-        console.log("Permutation : "+result)
-    }else if(first==last){
-        result = factorial(first)
-    }else if(first<last){
-        result = -1
-    }
-    return result
-}  
+  }
+
+
 
 
 
@@ -58,7 +93,7 @@ export const createUnclickableDialog = () =>
         },
       ]
     );
-export const createOneButtonDialog = (title,message,) =>
+export const createOneButtonDialog = (title,message) =>
     Alert.alert(
       title,
       message,

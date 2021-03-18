@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import CalButton from './CalButton'
-import {calculateResult, isOperator, unclickable, createUnclickableDialog, handleTextLength, createOneButtonDialog, calculatePermutation} from './Util'
+import {calculateResult, isOperator, unclickable, createUnclickableDialog, handleTextLength, checkHasString} from './Util'
 
 const list = [
   ["Cancel","AC","(",")","S"],
@@ -25,6 +25,7 @@ const list = [
 export default function App(){
   //double map + 컴포넌트에 key 활용
   const [result, setResult] = useState(0)
+  const [opclicked, setOpclicked] = useState(false)
 
   //unit 객체 설명
   //firstnum:첫번째 연산값
@@ -58,41 +59,6 @@ export default function App(){
   //이런식으로 놔두면 렌더링 될 때마다 초기화
   //계산 결과 저장
   const history = []
-  checkHasString = (data) => {
-    const op = ["P","C","S","H","π"]
-    let result = 0;
-    for(operator of op){
-      const index= data.toString().indexOf(operator)
-      if(index>0 && index != data.length-1){
-          if(operator == 'P'){
-            //일부러 명시적 typecasting 사용
-              result = calculatePermutation(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
-              break;
-          }
-          else if(operator == 'C'){
-            
-          }
-          else if(operator == 'S'){
-            
-          }
-          else if(operator == 'H'){
-            
-          }
-          else if(operator == 'π'){
-            
-          }
-      }else if(index==0 ||data.length-1 == index && index!=-1){
-          console.log("this operator has to be in the middle")
-      }else if(index == -1){
-          console.log("doesn't have operator")
-          result = index;
-          break;
-      }
-      return result;
-    }
-   
-    
-  }
   //이거 모듈화 하자
   //string 연산 알고리즘 구현
   handleresultString = (data) => {
@@ -107,26 +73,32 @@ export default function App(){
       setUnit(prevState => {return{...prevState, firstnum: "0", operator: "",lastnum:"",secondop:""}})
     }else if(isOperator(data)){
       //연산자일때
-      const lastresult = checkHasString(result)
+       const lastresult = checkHasString(result)
+       setOpclicked(true)
+       console.log("opclicked"+true)
+      console.log("lastresult"+lastresult)
         if(unit.operator==""){
           if(lastresult==result){
             setUnit(prevState => {return{...prevState,firstnum:result,operator: data, lastnum:"",secondop:""}})
           }else if(lastresult!=result){
             setUnit(prevState => {return{...prevState,firstnum:lastresult,operator: data, lastnum:"",secondop:""}})
+            setResult(lastresult)
           }
-          setResult(0)
         }
         else if(unit.operator!=""&&data!="="){
           if(lastresult==result){
             setUnit(prevState =>{return{...prevState, lastnum:result, secondop:data}},)
           }else if(lastresult!=result){
             setUnit(prevState =>{return{...prevState, lastnum:lastresult, secondop:data}},)
+            setResult(lastresult)
           }
-          setResult(0)
+          
         }else if(unit.operator!=""&&data=="="){
           if(lastresult==result){
+            console.log("lastresult"+lastresult+"result"+result)
             setUnit(prevState =>{return{...prevState, lastnum:result, secondop:data}},)
           }else if(lastresult!=result){
+            console.log("lastresult"+lastresult+"result"+result)
             setUnit(prevState =>{return{...prevState, lastnum:lastresult, secondop:data}},)
           }
         }else if(unit.operator==""&&data=="=" &&unit.firstnum!=""){
@@ -143,8 +115,20 @@ export default function App(){
       createUnclickableDialog()
     }else{
       if(result == "0"&&data !="."){
+        setOpclicked(false)
         setResult(data.toString())
-      }else{
+        console.log("opclicked : "+false)
+      }else if(result != "0" && opclicked==true && data != "C" && data != "P" && data != "H" && data != "S" && data != "π"){
+        setOpclicked(false)
+        setResult(data)
+        console.log("opclicked : "+false)
+      }
+      else if(opclicked==true && data =="C"||data=="P"||data=="H"||data =="S" ||data=="π")
+      {
+        setOpclicked(false)
+        setResult(result.toString().concat(data))
+        console.log("opclicked : "+false)
+      }else if(opclicked==false && result != "0"){
         setResult(result.toString().concat(data))
       }
     }
