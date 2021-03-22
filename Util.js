@@ -27,48 +27,58 @@ export function checkHasString(data){
     let index=0;
     let result = data;
     for(operator of op){
-        index= data.toString().indexOf(operator)
-        if(index != -1){
+        index = data.toString().indexOf(operator)
+        let count=0;
+
+        //indexof를 이용해서 문자열 개수 세기
+        while (index != -1) {
+          count++;
+          index = data.toString().indexOf(operator, index + 1);
+        }
+
+        if(count>0){
+          if(count >1){
+              console.log("Only One Operator Can Be Used");
+              createOneButtonDialog("Error","Only One Operator Can Be Used");
+              index = -2;
+              result = 0;
+          }else{
+            index = data.toString().indexOf(operator)
             break;
+          }
         }
     }
+
       if(index>0 && index != data.length-1 && index!=-1){
+        let front = parseInt(data.toString().slice(0,index))
+        let back = parseInt(data.toString().slice(index+1))
+
           if(data[index] == 'P'){
             //일부러 명시적 typecasting 사용
-              result = calculatePermutation(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
-              if(result ==-2){
-                  createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
-                  result = data
-              }
+              result = calculatePermutation(front,back)
              
           }
+
           else if(data[index] == 'C'){
-            result = calculateCombination(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
-            if(result ==-2){
-                createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
-                result = data
-            }
+            result = calculateCombination(front,back)
           }
+
           else if(data[index] == 'S'){
             
           }
+
           else if(data[index] == 'H'){
-            result = calculateCombinationwithRepetition(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
-            if(result ==-2){
-                createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
-                result = data
-            }
+            result = calculateCombinationwithRepetition(front,back)
             
           }
+
           else if(data[index] == 'π'){
-            result = calculatePermutationwithRepetition(parseInt(data.toString().slice(0,index)),parseInt(data.toString().slice(index+1)))
-            if(result ==-2){
-                createOneButtonDialog("Can't caculate Negative Numbers","Please use Positive numbers")
-                result = data
-            }
+            result = calculatePermutationwithRepetition(front,back)
           }
+
         }else if(index==0 ||data.length-1 == index && index!=-1){
           console.log("this operator has to be in the middle")
+          createOneButtonDialog("Syntax Error" ,"this operator has to be in the middle");
         }else if(index == -1){
           console.log("doesn't have operator")
     }

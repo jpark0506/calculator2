@@ -1,3 +1,4 @@
+import {createOneButtonDialog} from './Util';
 export const factorial = (data) =>{
     let result=1;
     for(i=1; i<=data; i++){
@@ -15,9 +16,11 @@ export function calculatePermutation(first, last){
     }else if(first==last){
         result = factorial(first)
     }else if(first<last){
-        result = -1
+        result = 0
+        createOneButtonDialog("Syntax Error!","first<last");
     }else if(first<0 || last<0){
-        result =-2
+        result = 0
+        createOneButtonDialog("Syntax Error!","Can't caculate Negative Numbers")
     }
     return result
 }
@@ -25,7 +28,8 @@ export function calculatePermutationwithRepetition(first, last){
     let result = 1
     console.log("first : "+first,"last : "+last)
     if(first<0||last<0){
-        result = -2
+        result = 0
+        createOneButtonDialog("Syntax Error!","first<last");
     }else{
         for(i=0; i<last; i++){
             result = result*first
@@ -35,7 +39,7 @@ export function calculatePermutationwithRepetition(first, last){
 }
 export function calculateCombination(first,last){
      let result = calculatePermutation(first,last)
-     if(result != -2 && result != -1){
+     if(result != 0){
          result = result/factorial(last)
      }
      return result
