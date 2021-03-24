@@ -8,11 +8,14 @@ import {
   Text,
   useColorScheme,
   View,
-  Alert
+  Alert,
+  TouchableOpacity,Image
 } from 'react-native';
 
 import CalButton from './CalButton'
 import {calculateResult, isOperator, unclickable, createUnclickableDialog, handleTextLength, checkHasString} from './Util'
+import { FAB } from 'react-native-paper'
+
 
 const list = [
   ["Cancel","AC","(",")","S"],
@@ -23,7 +26,7 @@ const list = [
 ]
 
 
-export default function Main(){
+export default function Main({navigation}){
   //double map + 컴포넌트에 key 활용
   const [result, setResult] = useState(0)
   const [opclicked, setOpclicked] = useState(false)
@@ -180,8 +183,19 @@ export default function Main(){
 
   return(
     //두번째 문장 대문자 붙이다가 오류 -> style 수정을 못함
+    <SafeAreaView>
       <View style ={styles.container}>
+          <View style = {styles.statusbar}>
+            
+            <Text style = {styles.title}>
+              Calculator 2
+            </Text>
+            <TouchableOpacity style={styles.settingbutton} onPress={()=>navigation.navigate('Setting')}>
+             <Image style = {styles.settingimage} source={require('./icon/setting.png')} />
+            </TouchableOpacity>
+          </View>
           <View style = {styles.resultContainer}>
+          
             <Text style = {styles.resultText}>
               {renderText()}
             </Text>
@@ -190,6 +204,7 @@ export default function Main(){
             {renderButtonLayout()}
           </View>
       </View>
+    </SafeAreaView>
 
   )
 }
@@ -217,6 +232,30 @@ const styles = StyleSheet.create({
   buttonRow: {
     flex: 1,
     flexDirection: 'row',
+  },
+  statusbar:{
+    flex:1,
+    backgroundColor: '#2B697F',
+    justifyContent:'center',
+    flexDirection:'row',
+    alignItems: 'center',
+  },settingbutton:{
+    flex:2,
+    margin:5,
+    backgroundColor: '#2B697F',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },title:{
+    flex:8,
+    margin:15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    fontSize:26
+  },settingimage:{
+    resizeMode:'contain',
+    height:"50%",
+    width:"50%",
   }
 });
 

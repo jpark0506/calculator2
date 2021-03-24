@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface calculatorTests : XCTestCase
+@interface Reanimated2PlaygroundTests : XCTestCase
 
 @end
 
-@implementation calculatorTests
+@implementation Reanimated2PlaygroundTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {
