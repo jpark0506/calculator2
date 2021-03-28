@@ -11,25 +11,39 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import SettingsList from 'react-native-settings-list';
+
 
 export default function Setting({navigation}){
 
     return(
     <SafeAreaView style = {styles.container}>
         <View style = {styles.statusbar}>
-            
-            <TouchableOpacity style={styles.settingbutton} onPress={()=>navigation.goBack()}>
+            <TouchableOpacity style = {styles.backbutton} onPress={()=>navigation.goBack()} >
+              <Image style = {styles.settingimage} source={require('./icon/back.png')} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.settingbutton}>
             <Text style = {styles.title}>
-              Back
+              설정
             </Text>
             </TouchableOpacity>
-          </View>
+            <View style = {styles.view2}>
+            </View>
+        </View>
         <View style =  {styles.view}>
-
+        
         </View>
     </SafeAreaView>)
 }
 const styles = StyleSheet.create({
+    backbutton:{
+      flex:2,
+      color: 'white',
+      margin:5
+    },
+    view2:{
+      flex:2,
+    },
     view:{
         flex:10
     },
@@ -44,7 +58,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems: 'center',
       },settingbutton:{
-        flex:2,
+        flex:8,
         margin:5,
         backgroundColor: '#2B697F',
         justifyContent: 'center',
@@ -60,5 +74,12 @@ const styles = StyleSheet.create({
         resizeMode:'contain',
         height:"50%",
         width:"50%",
+      }, imageStyle:{
+        marginLeft:15,
+        marginRight:20,
+        alignSelf:'center',
+        width:20,
+        height:24,
+        justifyContent:'center'
       }
 })

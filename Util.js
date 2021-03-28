@@ -1,5 +1,8 @@
 import {Alert} from 'react-native'
 import {calculateCombination, calculateCombinationwithRepetition, calculatePermutation, calculatePermutationwithRepetition} from './CalUtils'
+import MMKVStorage from "react-native-mmkv-storage";
+import moment from 'moment';
+import 'moment/locale/ko';
 export function calculateResult(unit){
     //toFixed(args) == 소수점 처리
     if(unit.operator == "+"){
@@ -24,66 +27,90 @@ export function calculateResult(unit){
 
 export function checkHasString(data){
     const op = ["P","C","S","H","π"]
-    let index=0;
+    let index=[-1,-1,-1,-1,-1];
+    let cnt=0;
+    let filtercnt=0;
     let result = data;
+    
     for(operator of op){
-        index = data.toString().indexOf(operator)
+        index[cnt] = data.toString().indexOf(operator)
+        console.log(index)
         let count=0;
-
         //indexof를 이용해서 문자열 개수 세기
-        while (index != -1) {
+        while (index[cnt] != -1) {
           count++;
-          index = data.toString().indexOf(operator, index + 1);
+          index[cnt] = data.toString().indexOf(operator, index[cnt] + 1);
         }
 
         if(count>0){
           if(count >1){
               console.log("Only One Operator Can Be Used");
               createOneButtonDialog("Error","Only One Operator Can Be Used");
-              index = -2;
+              index[cnt] = -2;
               result = 0;
           }else{
-            index = data.toString().indexOf(operator)
-            break;
+            //여기서부터 작업 시작
+            index[cnt] = data.toString().indexOf(operator)
           }
         }
+        cnt++
     }
-
-      if(index>0 && index != data.length-1 && index!=-1){
-        let front = parseInt(data.toString().slice(0,index))
-        let back = parseInt(data.toString().slice(index+1))
-
-          if(data[index] == 'P'){
+    
+    //연산자가 여러개 쓰였는지 확인
+    for(element of index){
+      if(element>-1){
+        filtercnt++;
+      }
+    }
+    if(filtercnt>1){
+      //여기서 연산자 2개 거름
+      result = 0;
+      createOneButtonDialog("Syntax Error","only one operator can be used");
+    }else{
+      //여기는 연산자가 하나 일때 공략
+      for(element of index){
+        if(element>0 && element != data.length-1 && element!=-1){
+        let front = parseInt(data.toString().slice(0,element))
+        let back = parseInt(data.toString().slice(element+1))
+        const MMKV = new MMKVStorage.Loader().initialize();
+        const date = moment().format('YYYY-MM-DD HH:mm:ss').toString();
+          if(data[element] == 'P'){
             //일부러 명시적 typecasting 사용
-              result = calculatePermutation(front,back)
-             
+            MMKV.setString(date, result);
+            result = calculatePermutation(front,back)
+
           }
 
-          else if(data[index] == 'C'){
+          else if(data[element] == 'C'){
+            MMKV.setString(date, result);
             result = calculateCombination(front,back)
           }
 
-          else if(data[index] == 'S'){
+          else if(data[element] == 'S'){
             
           }
 
-          else if(data[index] == 'H'){
+          else if(data[element] == 'H'){
+            MMKV.setString(date, result);
             result = calculateCombinationwithRepetition(front,back)
             
           }
 
-          else if(data[index] == 'π'){
+          else if(data[element] == 'π'){
+            MMKV.setString(date, result);
             result = calculatePermutationwithRepetition(front,back)
           }
 
-        }else if(index==0 ||data.length-1 == index && index!=-1){
+        }else if(element==0 ||data.length-1 == element && element!=-1){
           console.log("this operator has to be in the middle")
           createOneButtonDialog("Syntax Error" ,"this operator has to be in the middle");
-        }else if(index == -1){
+        }else if(element == -1){
           console.log("doesn't have operator")
+        }
     }
     return result;
   }
+}
 
 
 
@@ -127,11 +154,9 @@ export function handleTextLength(length){
     console.log("isLongf"+length)
     //이건 수학이 아녀 준혁아 0<=length<=8이 말이되냐!!
     if(0<=length && length<=6){
-        console.log("false"==length)
         return false
     }
     else if(length>6){
-        console.log("true"==length)
         return true
     }
 }
