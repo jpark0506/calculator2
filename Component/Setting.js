@@ -20,7 +20,7 @@ export default function Setting({navigation}){
     <SafeAreaView style = {styles.container}>
         <View style = {styles.statusbar}>
             <TouchableOpacity style = {styles.backbutton} onPress={()=>navigation.goBack()} >
-              <Image style = {styles.settingimage} source={require('./icon/back.png')} />
+              <Image style = {styles.settingimage} source={require('../icon/back.png')} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.settingbutton}>
             <Text style = {styles.title}>

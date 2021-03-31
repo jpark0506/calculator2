@@ -14,7 +14,7 @@ import {
   FlatList,
   Alert
 } from 'react-native';
-import HistoryItem from './HistoryItem';
+import HistoryItem from './Item/HistoryItem';
 import MMKVStorage from "react-native-mmkv-storage";
 
 export default function History({navigation}){
@@ -96,7 +96,7 @@ export default function History({navigation}){
     <SafeAreaView style = {styles.container}>
         <View style = {styles.statusbar}>
             <TouchableOpacity style = {styles.backbutton} onPress={()=>navigation.goBack()} >
-              <Image style = {styles.settingimage} source={require('./icon/back.png')} />
+              <Image style = {styles.settingimage} source={require('../icon/back.png')} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.settingbutton}>
             <Text style = {styles.title}>
@@ -104,7 +104,7 @@ export default function History({navigation}){
             </Text>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.deletebutton} onPress={()=>showDeleteAlert()} >
-              <Image style = {styles.settingimage} source={require('./icon/delete.png')} />
+              <Image style = {styles.settingimage} source={require('../icon/delete.png')} />
             </TouchableOpacity>
         </View>
         <View style =  {styles.view}>

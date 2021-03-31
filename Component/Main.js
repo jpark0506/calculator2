@@ -14,11 +14,11 @@ import {
   Asyncs
 } from 'react-native';
 
-import CalButton from './CalButton'
+import CalButton from './Button/CalButton'
 import MMKVStorage from "react-native-mmkv-storage";
 import moment from 'moment';
 import 'moment/locale/ko';
-import {calculateResult, isOperator, unclickable, createUnclickableDialog, handleTextLength, checkHasString} from './Util'
+import {calculateResult, isOperator, unclickable, createUnclickableDialog, handleTextLength, checkHasString} from '../Utils/Util'
 
 
 const list = [
@@ -208,10 +208,10 @@ function renderText(){
               확통계산기 2.0
             </Text>
             <TouchableOpacity style={styles.settingbutton} onPress={()=>navigation.navigate('History')}>
-             <Image style = {styles.settingimage} source={require('./icon/history.png')} />
+             <Image style = {styles.settingimage} source={require('../icon/history.png')} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.settingbutton} onPress={()=>navigation.navigate('Setting')}>
-             <Image style = {styles.settingimage} source={require('./icon/setting.png')} />
+             <Image style = {styles.settingimage} source={require('../icon/setting.png')} />
             </TouchableOpacity>
           </View>
           <View style = {styles.resultContainer}>
