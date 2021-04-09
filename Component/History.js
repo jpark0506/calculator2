@@ -47,9 +47,17 @@ export default function History({navigation}){
       }
     },[updatetoggle])
     //데이터 로딩을 위한 async 함수 -> promise 리턴을 기억하자
+    
     async function getData(){
-      let strings = await MMKV.indexer.strings.getAll();
-      return strings
+      try{
+        let strings = await MMKV.indexer.strings.getAll();
+        return strings
+      }catch(err){
+        console.error(err)
+        return null
+      }
+      
+      
     }
     //데이터 삭제를 위한 async 함수 -> promise 리턴 기억! + update 토글 적용
     async function deleteData(data){
@@ -60,13 +68,12 @@ export default function History({navigation}){
         console.log(error)
       }
     }
-    async function deleteAll(){
-      try{
-        await MMKV.clearStore();
-        setUpdateToggle(!updatetoggle)
-      }catch(error){
-        console.log(error)
-      }
+    //공식 문서에 있는 메소드 사용시 ios에서 네이티브 에러 발생
+    //error 트래킹은 firebase 이용
+    function deleteAll(){
+      getData().then(result => result.map((ele)=>{
+        deleteData(ele[0])
+      }))
     }
     const showDeleteAlert = () =>
     Alert.alert(
