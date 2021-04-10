@@ -48,6 +48,7 @@ export default function Main({navigation}){
     let strings = await MMKV.indexer.strings.getAll();
     return strings
   }
+  
   //useState의 비동기적 처리 때문에 기존에 java나 C++에서 하던 것 처럼 바로 정확한 연산 결과를 받기 어려움
   //useEffect를 이용해서 unit 값이 변경 될 때마다 사용자가 결과를 원하는지 판단한 후 연산 진행
   //비동기 처리는 모두 useEffect로 처리 그냥 프로미스도 될라나?

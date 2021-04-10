@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "639256114077",
+    "project_id": "calculator2-96306",
+    "storage_bucket": "calculator2-96306.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639256114077:android:0ed8d751aa04ae38563574",
+        "android_client_info": {
+          "package_name": "com.reanimated2playground"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639256114077-cpimkr6911ugnkij6kn5lqolht8ua7nq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8_CwZX_K4nMOiumaQVICONok1B581oU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639256114077-cpimkr6911ugnkij6kn5lqolht8ua7nq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

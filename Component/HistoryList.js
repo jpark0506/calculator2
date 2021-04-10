@@ -30,8 +30,13 @@ export default function HistoryList(){
     },[])
     const MMKV = new MMKVStorage.Loader().initialize();
     async function getData(){
-      let strings = await MMKV.indexer.strings.getAll();
-      return strings
+      try{
+        let strings = await MMKV.indexer.strings.getAll();
+        return strings
+      }catch(err){
+        console.log(err)
+        return null
+      }
     }
     function layout(){
         const layout = history.map((data)=>{
