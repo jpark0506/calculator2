@@ -61,18 +61,15 @@ export default function Main({navigation}){
     
     if(data === '='){
       
-        let temp = result;
+        let resulttemp= result;
+        let temp = result.replace(/×/gi,"*");
+        temp = temp.replace(/÷/gi,"/");
         try{
-          const resultstr = mathstr.eval(result);
-          saveData(resultstr,temp);
+          const resultstr = mathstr.eval(temp);
+          saveData(resultstr,resulttemp);
         }catch(e){
           console.log(e);
         }
-       
-        
-        
-        
-        
     }
     else if(data ==='AC'){
       setResult(0);
