@@ -39,11 +39,23 @@ export default function HistoryList(){
       }
     }
     function layout(){
-        const layout = history.map((data)=>{
+        let filtered = history.filter((data)=> data[1]!==null)
+        console.log("filtered"+filtered)
+        if(filtered.length===0){
+          return<View>
+            <Text>
+              기록 없음
+            </Text>
+          </View>
+        }else{
+          const layout = filtered.map((data)=>{
             <HistoryItem key = {data[0]} date ={data[0]} string={data[1]}>
             </HistoryItem>
-        })
-        return layout
+          })
+          return layout
+        }
+        
+        
     }
     return (
       <View>

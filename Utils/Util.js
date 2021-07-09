@@ -151,7 +151,7 @@ export function unclickable(operator){
     }
 }
 export function handleTextLength(length){
-    console.log("isLongf"+length)
+    console.log("문자 길이:"+length)
     //이건 수학이 아녀 준혁아 0<=length<=8이 말이되냐!!
     if(0<=length && length<=6){
         return false

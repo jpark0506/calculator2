@@ -40,7 +40,11 @@ export default function History({navigation}){
     useEffect(()=>{
       try{
         getData().then(results=>{
-          setHistory(results.reverse())})
+          
+            setHistory(results.reverse())
+          
+        })
+          
       }catch(error){
         console.log(error)
         Alert(error.toString())
@@ -51,6 +55,10 @@ export default function History({navigation}){
     async function getData(){
       try{
         let strings = await MMKV.indexer.strings.getAll();
+        if(strings.length>0){
+          strings = strings.filter(item=>item[1]!==null)
+        }
+        
         return strings
       }catch(err){
         console.error(err)
@@ -74,6 +82,21 @@ export default function History({navigation}){
       getData().then(result => result.map((ele)=>{
         deleteData(ele[0])
       }))
+    }
+    const renderList = () => {
+      if(history.length !==0){
+        return <FlatList
+        keyExtractor = {(item)=>item[0]}
+        data = {history} 
+        renderItem = {({item})=><HistoryItem date = {item[0]} string = {item[1]} deleteItem={deleteData}></HistoryItem>}>
+        </FlatList>
+      }
+      else {
+        return 
+        <Text>
+          기록 없음
+        </Text>
+      }
     }
     const showDeleteAlert = () =>
     Alert.alert(
@@ -115,11 +138,7 @@ export default function History({navigation}){
             </TouchableOpacity>
         </View>
         <View style =  {styles.view}>
-          <FlatList
-            keyExtractor = {(item)=>item[0]}
-            data = {history} 
-            renderItem = {({item})=><HistoryItem date = {item[0]} string = {item[1]} deleteItem={deleteData}></HistoryItem>}>
-          </FlatList>
+          {renderList()}
         </View>
     </SafeAreaView>)
 }
