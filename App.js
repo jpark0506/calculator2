@@ -4,11 +4,19 @@ import Main from './Component/Main';
 import { createStackNavigator } from '@react-navigation/stack';
 import Setting from './Component/Setting';
 import History from './Component/History';
-
+import MMKVStorage from "react-native-mmkv-storage";
 const Stack = createStackNavigator();
 
 
 export default function App() {
+  const MMKV = new MMKVStorage.Loader().initialize();
+  MMKV.indexer.strings.hasKey("theme").then((result) => {
+    if (result) {
+      // if true do this.
+    } else {
+      MMKV.setString("theme", "blue");
+    }
+  });
     return (
       <NavigationContainer>
         <Stack.Navigator>

@@ -98,30 +98,32 @@ export default function History({navigation}){
         </Text>
       }
     }
-    const showDeleteAlert = () =>
-    Alert.alert(
-        "기록을 모두 삭제하시겠습니까?",
-        "다시 복구할 수 없습니다",
-        [
-        {
-            text: "취소",
-            onPress: () => Alert.alert("Cancel Pressed"),
-            style: "cancel",
-        },
-        {
-            text:"삭제",
-            onPress: () => deleteAll(),
-            style:'default'
-        }
-        ],
-        {
-        cancelable: true,
-        onDismiss: () =>
-            Alert.alert(
-            "This alert was dismissed by tapping outside of the alert dialog."
-            ),
-        }       
-);
+    const showDeleteAlert = () => {
+        Alert.alert(
+          "기록을 모두 삭제하시겠습니까?",
+          "다시 복구할 수 없습니다",
+          [
+          {
+              text: "취소",
+              onPress: () => Alert.alert("Cancel Pressed"),
+              style: "cancel",
+          },
+          {
+              text:"삭제",
+              onPress: () => deleteAll(),
+              style:'default'
+          }
+          ],
+          {
+          cancelable: true,
+          onDismiss: () =>
+              Alert.alert(
+              "This alert was dismissed by tapping outside of the alert dialog."
+              ),
+          }       
+        );
+    }
+      
     return(
     <SafeAreaView style = {styles.container}>
         <View style = {styles.statusbar}>

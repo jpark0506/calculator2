@@ -20,7 +20,7 @@ import MMKVStorage from "react-native-mmkv-storage";
 import moment from 'moment';
 import 'moment/locale/ko';
 import {calculateResult, isOperator, unclickable, createUnclickableDialog, handleTextLength, checkHasString} from '../Utils/Util'
-
+import colors from '../Constant/colors';
 
 const list = [
   ["AC","sin","cos","tan"," "],
@@ -30,13 +30,18 @@ const list = [
   [1,2,3,"×","^"],
   [0,".","=","÷","!"],
 ]
-
+const color = "";
 export default function Main({navigation}){
   const [result, setResult] = useState(0)
   const [resulttemp, setResultTemp] = useState("");
-  const MMKV = new MMKVStorage.Loader().initialize()
+  const MMKV = new MMKVStorage.Loader().initialize();
   const [unit, setUnit] = useState({firstnum:"0", lastnum:"", operator:"",secondop:""})
-  
+  const [incolor, setColor] = useState("");
+  useEffect(()=>{
+    let theme = MMKV.getString("theme");
+    setColor(colors[theme]);
+    color = incolor;
+  },[])
   async function getData(){
     let strings = await MMKV.indexer.strings.getAll();
     return strings
@@ -165,11 +170,11 @@ const styles = StyleSheet.create({
     padding:20,
     justifyContent: 'flex-end',
     alignContent:'center',
-    backgroundColor: '#23374D',
+    backgroundColor: color,
   },
   buttonContainer: {
     flex: 7.5,
-    backgroundColor: '#23374D',
+    backgroundColor: color,
     borderColor: "#FFFFFF",
     borderStyle: "solid",
     borderWidth: 2,
@@ -184,7 +189,7 @@ const styles = StyleSheet.create({
   },
   statusbar:{
     flex:1,
-    backgroundColor: '#23374D',
+    backgroundColor: color,
     justifyContent:'center',
     flexDirection:'row',
     alignItems: 'center',
