@@ -22,9 +22,81 @@ export default function History({navigation}){
   const MMKV = new MMKVStorage.Loader().initialize();
 
   const [history, setHistory] = useState({})
+  const [color, setColor] = useState("#FFFFFF");
+  let styles = StyleSheet.create({
+    deletebutton:{
+      flex:2, 
+      color: 'white',
+      justifyContent:'flex-end',
+      alignItems:'center',
+    },
+    backbutton:{
+      flex:2,
+      color: 'white',
+      margin:5,
+    },
+    view:{
+        flexDirection:'column',
+        flex:10,
+        backgroundColor: color,
+    },
+    container: {
+        height:'100%',
+        width:'100%',
+        
+      },
+    statusbar:{
+        flex:1,
+        backgroundColor: color,
+        justifyContent:'center',
+        flexDirection:'row',
+        alignItems: 'center',
+        borderColor: "#FFFFFF",
+        borderStyle: "solid",
+        borderWidth: 2,
+      },settingbutton:{
+        flex:8,
+        margin:5,
+        backgroundColor: color,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },title:{
+        flex:8,
+        margin:15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily:'NeoDunggeunmoCode-Regular',
+        color: 'white',
+        fontSize:26
+      },settingimage:{
+        resizeMode:'contain',
+        height:"50%",
+        width:"50%",
+      }, imageStyle:{
+        marginLeft:15,
+        marginRight:20,
+        alignSelf:'center',
+        width:20,
+        height:24,
+        justifyContent:'center'
+      }
+})
   //데이터 업데이트시 리스트 리로딩을 위한 state
   const [updatetoggle, setUpdateToggle] = useState(false)
-
+  //theme init  
+  useEffect(()=>{
+      const MMKV = new MMKVStorage.Loader().initialize();
+      MMKV.indexer.strings.hasKey("theme").then((result) => {
+        if (!result) {
+          MMKV.setString("theme", "blue");
+        }
+        console.log(MMKV.getString("theme"));
+      });
+      let theme = MMKV.getString("theme");
+      console.log(colors[theme])
+      setColor(colors[theme]);
+    },[])
+  
     //초기 Data 로딩
     useEffect(()=>{
       try{
@@ -88,7 +160,7 @@ export default function History({navigation}){
         return <FlatList
         keyExtractor = {(item)=>item[0]}
         data = {history} 
-        renderItem = {({item})=><HistoryItem date = {item[0]} string = {item[1]} deleteItem={deleteData}></HistoryItem>}>
+        renderItem = {({item})=><HistoryItem color = {color} date = {item[0]} string = {item[1]} deleteItem={deleteData}></HistoryItem>}>
         </FlatList>
       }
       else {
@@ -145,57 +217,3 @@ export default function History({navigation}){
     </SafeAreaView>)
 }
 
-const styles = StyleSheet.create({
-    deletebutton:{
-      flex:2, 
-      color: 'white',
-      justifyContent:'flex-end',
-      alignItems:'center',
-    },
-    backbutton:{
-      flex:2,
-      color: 'white',
-      margin:5,
-    },
-    view:{
-        flexDirection:'column',
-        flex:10,
-        backgroundColor: '#455a64',
-    },
-    container: {
-        height:'100%',
-        width:'100%',
-        
-      },
-    statusbar:{
-        flex:1,
-        backgroundColor: '#455a64',
-        justifyContent:'center',
-        flexDirection:'row',
-        alignItems: 'center',
-      },settingbutton:{
-        flex:8,
-        margin:5,
-        backgroundColor: '#455a64',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },title:{
-        flex:8,
-        margin:15,
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: 'white',
-        fontSize:26
-      },settingimage:{
-        resizeMode:'contain',
-        height:"50%",
-        width:"50%",
-      }, imageStyle:{
-        marginLeft:15,
-        marginRight:20,
-        alignSelf:'center',
-        width:20,
-        height:24,
-        justifyContent:'center'
-      }
-})

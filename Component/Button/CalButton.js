@@ -12,27 +12,15 @@ import {
 } from 'react-native';
 
 // props 비구조화 할당
-function CalButton({value,handleOnPress}){
-
-    return(
-        <TouchableOpacity  style={styles.container} onPress={()=>handleOnPress(value)}>
-          
-            <Text style={styles.text}>
-                {value}
-            </Text>
-          
-            
-        </TouchableOpacity>
-    )
-}
-const styles = StyleSheet.create({
+function CalButton({color,value,handleOnPress}){
+  const styles = StyleSheet.create({
     container: {
       flex: 1,
       margin: 10,
-      backgroundColor: '#23374D',
+      backgroundColor: color,
       justifyContent: 'center',
       alignItems: 'center',
-      
+    
       borderColor: "#FFFFFF",
       borderStyle: "solid",
       borderWidth: 2,
@@ -47,5 +35,16 @@ const styles = StyleSheet.create({
       
     }
   });
+    return(
+        <TouchableOpacity  style={styles.container} onPress={()=>handleOnPress(value)}>
+          
+            <Text style={styles.text}>
+                {value}
+            </Text>
+          
+        </TouchableOpacity>
+    )
+}
+
 
 export default CalButton

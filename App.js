@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Main from './Component/Main';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,14 +9,8 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
-  const MMKV = new MMKVStorage.Loader().initialize();
-  MMKV.indexer.strings.hasKey("theme").then((result) => {
-    if (result) {
-      // if true do this.
-    } else {
-      MMKV.setString("theme", "blue");
-    }
-  });
+ 
+  
     return (
       <NavigationContainer>
         <Stack.Navigator>

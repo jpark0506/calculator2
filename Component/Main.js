@@ -30,22 +30,87 @@ const list = [
   [1,2,3,"×","^"],
   [0,".","=","÷","!"],
 ]
-const color = "";
+
 export default function Main({navigation}){
   const [result, setResult] = useState(0)
-  const [resulttemp, setResultTemp] = useState("");
+  
   const MMKV = new MMKVStorage.Loader().initialize();
-  const [unit, setUnit] = useState({firstnum:"0", lastnum:"", operator:"",secondop:""})
-  const [incolor, setColor] = useState("");
+  //const [unit, setUnit] = useState({firstnum:"0", lastnum:"", operator:"",secondop:""})
+  const [color, setColor] = useState("#FFFFFF");
+
   useEffect(()=>{
+    const MMKV = new MMKVStorage.Loader().initialize();
+    MMKV.indexer.strings.hasKey("theme").then((result) => {
+      if (!result) {
+        MMKV.setString("theme", "blue");
+      }
+      console.log(MMKV.getString("theme"));
+    });
     let theme = MMKV.getString("theme");
+    console.log(colors[theme])
     setColor(colors[theme]);
-    color = incolor;
   },[])
-  async function getData(){
-    let strings = await MMKV.indexer.strings.getAll();
-    return strings
-  }
+  let styles = StyleSheet.create({
+    container: {
+      height:'100%',
+      width:'100%',
+      
+    },
+    resultContainer: {
+      flex: 2.5,
+      padding:20,
+      justifyContent: 'flex-end',
+      alignContent:'center',
+      backgroundColor: color,
+    },
+    buttonContainer: {
+      flex: 7.5,
+      backgroundColor: color,
+      borderColor: "#FFFFFF",
+      borderStyle: "solid",
+      borderWidth: 2,
+    },
+    resultText: {
+      color: 'white',
+      textAlign: 'right',
+    },
+    buttonRow: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    statusbar:{
+      flex:1,
+      backgroundColor: color,
+      justifyContent:'center',
+      flexDirection:'row',
+      alignItems: 'center',
+      borderColor: "#FFFFFF",
+      borderStyle: "solid",
+      borderWidth: 2,
+    },settingbutton:{
+      flex:2,
+      margin:5,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },title:{
+      flex:8,
+      margin:15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontFamily:'NeoDunggeunmoCode-Regular',
+      color: 'white',
+      fontSize:26,
+    },settingimage:{
+      resizeMode:'contain',
+      height:"50%",
+      width:"50%",
+    }
+  });
+  // async function getData(){
+  //   let strings = await MMKV.indexer.strings.getAll();
+  //   return strings
+  // }
+  
   const saveData = async (resultstr,temp) =>{
     const date = moment().format('YYYY-MM-DD HH:mm:ss').toString();
     await MMKV.setStringAsync(date, temp.concat("=",resultstr)).then(
@@ -115,6 +180,7 @@ function renderText(){
       const renderRow = row.map((button,index)=>{
         return(  
         <CalButton 
+          color = {color}
           value = {button} 
           key = {"btn-"+index} 
           handleOnPress = {handleOnPress}>
@@ -159,61 +225,4 @@ function renderText(){
 
   )
 }
-const styles = StyleSheet.create({
-  container: {
-    height:'100%',
-    width:'100%',
-    
-  },
-  resultContainer: {
-    flex: 2.5,
-    padding:20,
-    justifyContent: 'flex-end',
-    alignContent:'center',
-    backgroundColor: color,
-  },
-  buttonContainer: {
-    flex: 7.5,
-    backgroundColor: color,
-    borderColor: "#FFFFFF",
-    borderStyle: "solid",
-    borderWidth: 2,
-  },
-  resultText: {
-    color: 'white',
-    textAlign: 'right',
-  },
-  buttonRow: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  statusbar:{
-    flex:1,
-    backgroundColor: color,
-    justifyContent:'center',
-    flexDirection:'row',
-    alignItems: 'center',
-    borderColor: "#FFFFFF",
-    borderStyle: "solid",
-    borderWidth: 2,
-  },settingbutton:{
-    flex:2,
-    margin:5,
-    
-    justifyContent: 'center',
-    alignItems: 'center',
-  },title:{
-    flex:8,
-    margin:15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily:'NeoDunggeunmoCode-Regular',
-    color: 'white',
-    fontSize:26,
-  },settingimage:{
-    resizeMode:'contain',
-    height:"50%",
-    width:"50%",
-  }
-});
 

@@ -15,8 +15,30 @@ import {
 } from 'react-native';
 import SettingsList from 'react-native-settings-list';
 
-export default function HistoryItem({date, string, deleteItem}){
+export default function HistoryItem({color, date, string, deleteItem}){
 
+    const styles = StyleSheet.create({
+        item :{
+            height:50,
+            width:'100%',
+            backgroundColor:color,
+            flexDirection:'row',
+            alignItems:'center'
+        },datetext:{
+            flex: 5,
+            color:'white',
+            textAlign:'center',
+        },resultstring:{
+            flex:5,
+            textAlign:'center',
+            color:'white',
+            fontSize:26
+        },divider:{
+            width:"100%",
+            height:2,
+            backgroundColor:'#FFFFF'
+        }
+    })
     const showAlert = (date,string) =>
         Alert.alert(
             "해당 항목을 삭제하시겠습니까?",
@@ -24,7 +46,7 @@ export default function HistoryItem({date, string, deleteItem}){
             [
             {
                 text: "취소",
-                onPress: () => Alert.alert("Cancel Pressed"),
+                onPress: () => {},
                 style: "cancel",
             },
             {
@@ -37,9 +59,7 @@ export default function HistoryItem({date, string, deleteItem}){
             {
             cancelable: true,
             onDismiss: () =>
-                Alert.alert(
-                "This alert was dismissed by tapping outside of the alert dialog."
-                ),
+                {}
             }       
   );
     return(
@@ -59,25 +79,3 @@ export default function HistoryItem({date, string, deleteItem}){
     )
 }
 
-const styles = StyleSheet.create({
-    item :{
-        height:50,
-        width:'100%',
-        backgroundColor:'#718792',
-        flexDirection:'row',
-        alignItems:'center'
-    },datetext:{
-        flex: 5,
-        color:'white',
-        textAlign:'center',
-    },resultstring:{
-        flex:5,
-        textAlign:'center',
-        color:'white',
-        fontSize:26
-    },divider:{
-        width:"100%",
-        height:1,
-        backgroundColor:'#455a64'
-    }
-})
