@@ -19,24 +19,33 @@ export default function HistoryItem({color, date, string, deleteItem}){
 
     const styles = StyleSheet.create({
         item :{
-            height:50,
-            width:'100%',
+            height:100,
+            width:'95%',
             backgroundColor:color,
-            flexDirection:'row',
-            alignItems:'center'
+            flexDirection:'column',
+            alignItems:'center',
+            borderColor: "#FFFFFF",
+            borderStyle: "solid",
+            borderWidth: 2,
+            borderRadius:20,
+            margin:10
         },datetext:{
+            marginTop:20,
             flex: 5,
             color:'white',
+            fontFamily:'NeoDunggeunmoCode-Regular',
             textAlign:'center',
         },resultstring:{
             flex:5,
             textAlign:'center',
             color:'white',
-            fontSize:26
+            fontSize:26,
+            fontFamily:'NeoDunggeunmoCode-Regular',
+            marginBottom:20
         },divider:{
             width:"100%",
             height:2,
-            backgroundColor:'#FFFFF'
+            backgroundColor:'#FFFFFF'
         }
     })
     const showAlert = (date,string) =>
@@ -72,7 +81,7 @@ export default function HistoryItem({color, date, string, deleteItem}){
                     {string}
                 </Text>
             </TouchableOpacity>
-            <View style = {styles.divider}></View>
+            {/* <View style = {styles.divider}></View> */}
         </View>
             
             

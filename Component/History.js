@@ -86,15 +86,25 @@ export default function History({navigation}){
   //theme init  
   useEffect(()=>{
       const MMKV = new MMKVStorage.Loader().initialize();
-      MMKV.indexer.strings.hasKey("theme").then((result) => {
+      
+      MMKV.indexer.strings.hasKey("theme").then(async (result) => {
+        console.log("History.js/"+"result : "+result)
         if (!result) {
-          MMKV.setString("theme", "blue");
+          //default color setting
+          await MMKV.setStringAsync("theme", "Navy").then(async ()=>{
+            console.log("History.js/"+"theme : " + await MMKV.getStringAsync("theme"));
+  
+          })
+          .catch(err=>console.log(err));
+        }else{
+          await MMKV.getStringAsync("theme").then(res=>{
+            console.log("History.js/"+"color : "+colors[res])
+            setColor(colors[res]);
+          })
         }
-        console.log(MMKV.getString("theme"));
       });
-      let theme = MMKV.getString("theme");
-      console.log(colors[theme])
-      setColor(colors[theme]);
+      
+      
     },[])
   
     //초기 Data 로딩
@@ -129,7 +139,9 @@ export default function History({navigation}){
         let strings = await MMKV.indexer.strings.getAll();
         if(strings.length>0){
           strings = strings.filter(item=>item[1]!==null)
+          strings = strings.filter(item=>item[0]!=="theme")
         }
+        
         
         return strings
       }catch(err){
@@ -202,11 +214,11 @@ export default function History({navigation}){
             <TouchableOpacity style = {styles.backbutton} onPress={()=>navigation.goBack()} >
               <Image style = {styles.settingimage} source={require('../icon/back.png')} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.settingbutton}>
+            <View style={styles.settingbutton}>
             <Text style = {styles.title}>
               계산기록
             </Text>
-            </TouchableOpacity>
+            </View>
             <TouchableOpacity style = {styles.deletebutton} onPress={()=>showDeleteAlert()} >
               <Image style = {styles.settingimage} source={require('../icon/delete.png')} />
             </TouchableOpacity>

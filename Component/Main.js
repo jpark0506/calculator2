@@ -40,15 +40,24 @@ export default function Main({navigation}){
 
   useEffect(()=>{
     const MMKV = new MMKVStorage.Loader().initialize();
-    MMKV.indexer.strings.hasKey("theme").then((result) => {
+    MMKV.indexer.strings.hasKey("theme").then(async (result) => {
+      console.log("Main.js/"+"result : "+result)
       if (!result) {
-        MMKV.setString("theme", "blue");
+        //default color setting
+        await MMKV.setStringAsync("theme", "Navy").then(async ()=>{
+          console.log("Main.js/[NORESULT]"+"theme : " + await MMKV.getStringAsync("theme"));
+
+        })
+        .catch(err=>console.log(err));
       }
-      console.log(MMKV.getString("theme"));
+      else{
+        await MMKV.getStringAsync("theme").then(res=>{
+          console.log("Main.js/"+"color : "+colors[res])
+          setColor(colors[res]);
+        });
+      }
     });
-    let theme = MMKV.getString("theme");
-    console.log(colors[theme])
-    setColor(colors[theme]);
+   
   },[])
   let styles = StyleSheet.create({
     container: {
@@ -108,17 +117,17 @@ export default function Main({navigation}){
   });
   // async function getData(){
   //   let strings = await MMKV.indexer.strings.getAll();
-  //   return strings
+  //   return strings;
   // }
   
-  const saveData = async (resultstr,temp) =>{
+  const saveData = async (resultstr,temp) => {
     const date = moment().format('YYYY-MM-DD HH:mm:ss').toString();
     await MMKV.setStringAsync(date, temp.concat("=",resultstr)).then(
       ()=>{
         console.log(resultstr);
         setResult(resultstr);
       }
-    ).catch((error)=>{
+    ).catch(error => {
       console.log(error);
     });
   }
