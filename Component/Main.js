@@ -31,7 +31,7 @@ const list = [
   [0,".","=","÷","!"],
 ]
 
-export default function Main({navigation}){
+export default function Main({navigation,route}){
   const [result, setResult] = useState(0)
   
   const MMKV = new MMKVStorage.Loader().initialize();
@@ -39,11 +39,16 @@ export default function Main({navigation}){
   const [color, setColor] = useState("#FFFFFF");
 
   useEffect(()=>{
+    if(route.params?.color){
+      setColor(route.params?.color);
+    }
+  },[route.params?.color])
+
+  useEffect(()=>{
     const MMKV = new MMKVStorage.Loader().initialize();
     MMKV.indexer.strings.hasKey("theme").then(async (result) => {
       console.log("Main.js/"+"result : "+result)
       if (!result) {
-        //default color setting
         await MMKV.setStringAsync("theme", "Navy").then(async ()=>{
           console.log("Main.js/[NORESULT]"+"theme : " + await MMKV.getStringAsync("theme"));
 

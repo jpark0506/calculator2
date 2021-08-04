@@ -12,26 +12,31 @@ import {
   View,
 } from 'react-native';
 import MMKVStorage from "react-native-mmkv-storage";
+import Modal from 'react-native-modal';
 import SettingsList from 'react-native-settings-list';
+import colors from '../Constant/colors';
 
 
 export default function Setting({navigation}){
+  const [themeModalVisible, setThemeModalVisible] = useState(false);
+  const [color, setColor] = useState("#FFFFFF");
   const MMKV = new MMKVStorage.Loader().initialize();
+    
+
 
   useEffect(()=>{
-    const MMKV = new MMKVStorage.Loader().initialize();
     
     MMKV.indexer.strings.hasKey("theme").then(async (result) => {
-      console.log("History.js/"+"result : "+result)
+      console.log("Setting.js/"+"result : "+result)
       if (!result) {
         //default color setting
         await MMKV.setStringAsync("theme", "Navy").then(async ()=>{
-          console.log("History.js/"+"theme : " + await MMKV.getStringAsync("theme"));
+          console.log("Setting.js/"+"theme : " + await MMKV.getStringAsync("theme"));
         })
         .catch(err=>console.log(err));
       }else{
         await MMKV.getStringAsync("theme").then(res=>{
-          console.log("History.js/"+"color : "+colors[res])
+          console.log("Setting.js/"+"color : "+colors[res])
           setColor(colors[res]);
         })
       }
@@ -40,8 +45,39 @@ export default function Setting({navigation}){
     
   },[])
 
-  const [color, setColor] = useState("#FFFFFF");
+  const saveColorData = async (color) => {
+    await MMKV.setStringAsync("theme", color).then(async ()=>{
+      console.log("History.js/"+"theme : " + await MMKV.getStringAsync("theme"));
+      await MMKV.getStringAsync("theme").then(res=>{
+        console.log("History.js/"+"color : "+colors[res])
+        setColor(colors[res]);
+      })
+    })
+    .catch(err=>console.log(err));
+  }
   
+  const renderModal = () => {
+    let colorL = Object.keys(colors).map((key) => [key, colors[key]]);
+    let colorList = colorL.map((color, index)=>{
+        return(
+        <View key = {index} style = {{backgroundColor:color[1], margin:5}}>
+          <TouchableOpacity style={{margin:5}} onPress={()=>saveColorData(color[0])}>
+            <Text style={{fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+              {color[0]}
+            </Text>
+          </TouchableOpacity>
+        </View>)
+      
+    })
+    return <View>{colorList}</View>
+    
+  }
+
+  const toggleThemeModal = () => {
+    console.log("toggled");
+    setThemeModalVisible(!themeModalVisible);
+  }
+
   const styles = StyleSheet.create({
       backbutton:{
         flex:2,
@@ -113,7 +149,11 @@ export default function Setting({navigation}){
     return(
     <SafeAreaView style = {styles.container}>
         <View style = {styles.statusbar}>
-            <TouchableOpacity style = {styles.backbutton} onPress={()=>navigation.goBack()} >
+            <TouchableOpacity style = {styles.backbutton} onPress={()=>navigation.navigate({
+            name: 'Main',
+            params: { color: color },
+            merge: true,
+          })} >
               <Image style = {styles.settingimage} source={require('../icon/back.png')} />
             </TouchableOpacity>
             <View style={styles.settingbutton}>
@@ -126,11 +166,32 @@ export default function Setting({navigation}){
             </View>
         </View>
         <View style =  {styles.view}>
-          <TouchableOpacity style={styles.settinglistitem}>
+          <TouchableOpacity style={styles.settinglistitem} onPress={toggleThemeModal}>
             <Text style={styles.settingText}>
               Theme
             </Text>
           </TouchableOpacity>
+            
         </View>
+        <View >
+          <Modal isVisible={themeModalVisible} backdropColor={'#000000'} >
+              <View style={{display:"flex" ,marginHorizontal:"10%", marginVertical:"10%", backgroundColor:"#FFFFFF"}}>
+                  <View style={{margin:10 }}>
+                    <Text style = {{fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+                      Select Color
+                    </Text>
+                  </View>
+                  {renderModal()}
+                  <View style={{margin:10 }}>
+                    <TouchableOpacity onPress={toggleThemeModal}>
+                      <Text style = {{fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+                      Close
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+              </View>
+          </Modal>
+        </View>
+         
     </SafeAreaView>)
 }

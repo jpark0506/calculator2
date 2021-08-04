@@ -23,6 +23,7 @@ export default function History({navigation}){
 
   const [history, setHistory] = useState({})
   const [color, setColor] = useState("#FFFFFF");
+  
   let styles = StyleSheet.create({
     deletebutton:{
       flex:2, 
@@ -167,6 +168,7 @@ export default function History({navigation}){
         deleteData(ele[0])
       }))
     }
+    
     const renderList = () => {
       if(history.length !==0){
         return <FlatList
