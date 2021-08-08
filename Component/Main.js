@@ -19,7 +19,7 @@ import CalButton from './Button/CalButton'
 import MMKVStorage from "react-native-mmkv-storage";
 import moment from 'moment';
 import 'moment/locale/ko';
-import {calculateResult, isOperator, unclickable, createUnclickableDialog, handleTextLength, checkHasString} from '../Utils/Util'
+import { handleTextLength} from '../Utils/Util'
 import colors from '../Constant/colors';
 
 const list = [
@@ -83,6 +83,7 @@ export default function Main({navigation,route}){
       borderColor: "#FFFFFF",
       borderStyle: "solid",
       borderWidth: 2,
+      borderRadius: 5
     },
     resultText: {
       color: 'white',

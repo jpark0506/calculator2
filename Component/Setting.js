@@ -19,13 +19,13 @@ import colors from '../Constant/colors';
 
 export default function Setting({navigation}){
   const [themeModalVisible, setThemeModalVisible] = useState(false);
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [color, setColor] = useState("#FFFFFF");
   const MMKV = new MMKVStorage.Loader().initialize();
     
 
 
   useEffect(()=>{
-    
     MMKV.indexer.strings.hasKey("theme").then(async (result) => {
       console.log("Setting.js/"+"result : "+result)
       if (!result) {
@@ -56,13 +56,39 @@ export default function Setting({navigation}){
     .catch(err=>console.log(err));
   }
   
+  const infoRenderModal = () => {
+    return(
+      <View style = {{backgroundColor:color[1], margin:5}}>
+        
+          <Text style={{margin:5,fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            Info
+          </Text>
+          <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            App Version: 2.0.0
+          </Text>
+          <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            App Name: 확통 계산기 2.0
+          </Text>
+          <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            Dev Platform: React Native
+          </Text>
+          <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            BugReport: junhyuk.park52@gmail.com
+          </Text>
+          <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            Dev Email: junhyuk.park52@gmail.com
+          </Text>
+      </View>
+    )
+  }
+
   const renderModal = () => {
     let colorL = Object.keys(colors).map((key) => [key, colors[key]]);
     let colorList = colorL.map((color, index)=>{
         return(
         <View key = {index} style = {{backgroundColor:color[1], margin:5}}>
-          <TouchableOpacity style={{margin:5}} onPress={()=>saveColorData(color[0])}>
-            <Text style={{fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+          <TouchableOpacity style={{margin:10}} onPress={()=>saveColorData(color[0])}>
+            <Text style={{color:"#FFFFFF",fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
               {color[0]}
             </Text>
           </TouchableOpacity>
@@ -73,8 +99,13 @@ export default function Setting({navigation}){
     
   }
 
+  const toggleInfoModal = () => {
+    console.log("info toggled");
+    setInfoModalVisible(!infoModalVisible);
+  }
+
   const toggleThemeModal = () => {
-    console.log("toggled");
+    console.log("theme toggled");
     setThemeModalVisible(!themeModalVisible);
   }
 
@@ -89,7 +120,7 @@ export default function Setting({navigation}){
       },
       view:{
           flex:10,
-          flexDirection:'row',
+          flexDirection:'column',
           backgroundColor:color
       },
       container: {
@@ -171,9 +202,14 @@ export default function Setting({navigation}){
               Theme
             </Text>
           </TouchableOpacity>
-            
+          <TouchableOpacity style={styles.settinglistitem} onPress={toggleInfoModal}>
+            <Text style={styles.settingText}>
+              Info
+            </Text>
+          </TouchableOpacity>
         </View>
-        <View >
+        
+        <View>
           <Modal isVisible={themeModalVisible} backdropColor={'#000000'} >
               <View style={{display:"flex" ,marginHorizontal:"10%", marginVertical:"10%", backgroundColor:"#FFFFFF"}}>
                   <View style={{margin:10 }}>
@@ -184,6 +220,20 @@ export default function Setting({navigation}){
                   {renderModal()}
                   <View style={{margin:10 }}>
                     <TouchableOpacity onPress={toggleThemeModal}>
+                      <Text style = {{fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+                      Close
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+              </View>
+          </Modal>
+        </View>
+        <View >
+          <Modal isVisible={infoModalVisible} backdropColor={'#000000'} >
+              <View style={{display:"flex" ,marginHorizontal:"10%", marginVertical:"10%", backgroundColor:"#FFFFFF"}}>
+                  {infoRenderModal()}
+                  <View style={{margin:10 }}>
+                    <TouchableOpacity onPress={toggleInfoModal}>
                       <Text style = {{fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
                       Close
                       </Text>

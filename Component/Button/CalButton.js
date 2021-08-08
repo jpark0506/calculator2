@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    ProgressViewIOSComponent,
+  ProgressViewIOSComponent,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -20,19 +20,16 @@ function CalButton({color,value,handleOnPress}){
       backgroundColor: color,
       justifyContent: 'center',
       alignItems: 'center',
-    
       borderColor: "#FFFFFF",
       borderStyle: "solid",
       borderWidth: 2,
+      borderRadius: 5
     },
    
     text: {
       fontFamily:'NeoDunggeunmoCode-Regular',
       color: 'white',
       fontSize: 26,
-     
-      
-      
     }
   });
     return(
