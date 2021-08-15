@@ -1,21 +1,18 @@
 import React from 'react';
 import { useEffect } from 'react';
 import {
-    ProgressViewIOSComponent,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  useColorScheme,
+  
   View,
   Alert,
 } from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import SettingsList from 'react-native-settings-list';
 
 export default function HistoryItem({color, date, string, deleteItem}){
+    
 
     const styles = StyleSheet.create({
         item :{
@@ -48,9 +45,29 @@ export default function HistoryItem({color, date, string, deleteItem}){
             backgroundColor:'#FFFFFF'
         }
     })
-    const showAlert = (date,string) =>
+    const copyToClipboard = (string) => {
+        console.log("copyToClipboard", string)
+        Clipboard.setString(string);
+        let temp = string.concat("이 복사되었습니다.");
+        showOKAlert(temp);
+    }
+    const showOKAlert = (string) => {
+        
+        console.log("showOKAlert",string)
         Alert.alert(
-            "해당 항목을 삭제하시겠습니까?",
+            "복사 성공",
+            string,[
+           {
+               text: "확인",
+               onPress: () => {},
+               style: "cancel",
+           }],
+           {cancelable:true}
+       )
+    }
+    const showAlert = (date,string) =>{
+        Alert.alert(
+            "할 작업을 선택해주세요",
             string,
             [
             {
@@ -58,19 +75,24 @@ export default function HistoryItem({color, date, string, deleteItem}){
                 onPress: () => {},
                 style: "cancel",
             },
+            
             {
                 text:"삭제",
                 //자식->부모 props전달ㅎㅎ 이제 완벽 활용 가능!
                 onPress: () => {deleteItem(date)},
                 style:'default'
-            }
+            },
+            {
+                text: "복사",
+                onPress: () => {copyToClipboard(string)},
+            },
             ],
             {
             cancelable: true,
             onDismiss: () =>
                 {}
             }       
-  );
+  )};
     return(
         <View>
             <TouchableOpacity style = {styles.item} onPress={()=>showAlert(date,string)}>
