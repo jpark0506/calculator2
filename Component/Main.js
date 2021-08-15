@@ -14,8 +14,7 @@ import {
   Image,
   Asyncs
 } from 'react-native';
-import Banner from  './Banner/Banner'
-import tokens from '../Constant/token';
+
 import CalButton from './Button/CalButton'
 import MMKVStorage from "react-native-mmkv-storage";
 import moment from 'moment';
@@ -24,11 +23,11 @@ import { handleTextLength} from '../Utils/Util'
 import colors from '../Constant/colors';
 
 const list = [
-  ["AC","sin","cos","tan","e"],
-  ["ln","(",",",")","S","H"],
+  ["AC","sin","cos","tan"," "],
+  ["ln","log","(",")","e"],
   [7,8,9,"+","P"],
   [4,5,6,"-","C"],
-  [1,2,3,"×","π"],
+  [1,2,3,"×","^"],
   [0,".","=","÷","!"],
 ]
 
@@ -72,14 +71,14 @@ export default function Main({navigation,route}){
       
     },
     resultContainer: {
-      flex: 2,
+      flex: 2.5,
       padding:20,
       justifyContent: 'flex-end',
       alignContent:'center',
       backgroundColor: color,
     },
     buttonContainer: {
-      flex: 7,
+      flex: 7.5,
       backgroundColor: color,
       borderColor: "#FFFFFF",
       borderStyle: "solid",
@@ -115,7 +114,7 @@ export default function Main({navigation,route}){
       alignItems: 'center',
       fontFamily:'NeoDunggeunmoCode-Regular',
       color: 'white',
-      fontSize:23,
+      fontSize:26,
     },settingimage:{
       resizeMode:'contain',
       height:"50%",
@@ -151,7 +150,6 @@ export default function Main({navigation,route}){
         let temp = result.replace(/×/gi,"*");
         temp = temp.replace(/÷/gi,"/");
         try{
-          mathstr.addToken([tokens.tokenH,tokens.tokenpi, tokens.tokenS]);
           const resultstr = mathstr.eval(temp);
           saveData(resultstr,resulttemp);
         }catch(e){
@@ -178,13 +176,13 @@ function renderText(){
       number = result === undefined ? setResult(0) : result.toString().length
       if(!handleTextLength(number)){
         return(
-          <Text selectable={true} style={{fontSize:70, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+          <Text style={{fontSize:70, fontFamily:'NeoDunggeunmoCode-Regular'}}>
             {result}
           </Text>
         )
       }else{
         return(
-          <Text  selectable={true} style={{fontSize:25, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+          <Text style={{fontSize:25, fontFamily:'NeoDunggeunmoCode-Regular'}}>
               {result}
           </Text>
         )
@@ -229,7 +227,6 @@ function renderText(){
              <Image style = {styles.settingimage} source={require('../icon/setting.png')} />
             </TouchableOpacity>
           </View>
-          <Banner></Banner>
           <View style = {styles.resultContainer}>
             <Text style = {styles.resultText} >
               {renderText()}

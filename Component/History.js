@@ -15,7 +15,6 @@ import {
   Alert
 } from 'react-native';
 import HistoryItem from './Item/HistoryItem';
-import Banner from './Banner/Banner';
 import MMKVStorage from "react-native-mmkv-storage";
 
 export default function History({navigation}){
@@ -64,12 +63,12 @@ export default function History({navigation}){
         alignItems: 'center',
       },title:{
         flex:8,
-        margin:5,
+        margin:15,
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily:'NeoDunggeunmoCode-Regular',
         color: 'white',
-        fontSize:23
+        fontSize:26
       },settingimage:{
         resizeMode:'contain',
         height:"50%",
@@ -190,20 +189,24 @@ export default function History({navigation}){
           "기록을 모두 삭제하시겠습니까?",
           "다시 복구할 수 없습니다",
           [
-          
+          {
+              text: "취소",
+              onPress: () => Alert.alert("Cancel Pressed"),
+              style: "cancel",
+          },
           {
               text:"삭제",
               onPress: () => deleteAll(),
-              
-          },
-          {
-            text: "취소",
-            onPress: () => Alert.alert("Cancel Pressed"),
-            style: "cancel",
-        },
-          
+              style:'default'
+          }
           ],
-          { cancelable: true }       
+          {
+          cancelable: true,
+          onDismiss: () =>
+              Alert.alert(
+              "This alert was dismissed by tapping outside of the alert dialog."
+              ),
+          }       
         );
     }
       
@@ -225,9 +228,6 @@ export default function History({navigation}){
         <View style =  {styles.view}>
           {renderList()}
         </View>
-        <Banner>
-
-        </Banner>
     </SafeAreaView>)
 }
 

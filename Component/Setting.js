@@ -15,7 +15,7 @@ import MMKVStorage from "react-native-mmkv-storage";
 import Modal from 'react-native-modal';
 import SettingsList from 'react-native-settings-list';
 import colors from '../Constant/colors';
-import Banner from './Banner/Banner';
+
 
 export default function Setting({navigation}){
   const [themeModalVisible, setThemeModalVisible] = useState(false);
@@ -88,7 +88,7 @@ export default function Setting({navigation}){
         return(
         <View key = {index} style = {{backgroundColor:color[1], margin:5}}>
           <TouchableOpacity style={{margin:10}} onPress={()=>saveColorData(color[0])}>
-            <Text style={{color:"#FFFFFF",fontSize:23, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            <Text style={{color:"#FFFFFF",fontSize:30, fontFamily:'NeoDunggeunmoCode-Regular'}}>
               {color[0]}
             </Text>
           </TouchableOpacity>
@@ -144,12 +144,12 @@ export default function Setting({navigation}){
           alignItems: 'center',
         },title:{
           flex:8,
-          margin:5,
+          margin:15,
           justifyContent: 'center',
           alignItems: 'center',
           color: 'white',
           fontFamily:'NeoDunggeunmoCode-Regular',
-          fontSize:23
+          fontSize:26
         },settingimage:{
           resizeMode:'contain',
           height:"50%",
@@ -242,8 +242,6 @@ export default function Setting({navigation}){
               </View>
           </Modal>
         </View>
-         <Banner>
-
-         </Banner>
+         
     </SafeAreaView>)
 }

@@ -17,10 +17,10 @@ export function calculatePermutation(first, last){
         result = factorial(first)
     }else if(first<last){
         result = 0
-        console.log("Syntax Error!","first<last");
+        createOneButtonDialog("Syntax Error!","first<last");
     }else if(first<0 || last<0){
         result = 0
-        console.log("Syntax Error!","Can't caculate Negative Numbers")
+        createOneButtonDialog("Syntax Error!","Can't caculate Negative Numbers")
     }
     return result
 }
@@ -29,7 +29,7 @@ export function calculatePermutationwithRepetition(first, last){
     console.log("first : "+first,"last : "+last)
     if(first<0||last<0){
         result = 0
-        console.log("Syntax Error!","first<last");
+        createOneButtonDialog("Syntax Error!","first<last");
     }else{
         for(i=0; i<last; i++){
             result = result*first
@@ -47,16 +47,4 @@ export function calculateCombination(first,last){
 export function calculateCombinationwithRepetition(first,last){
     let result = calculateCombination(first+last-1,last)
     return result
-}
-
-export function stirlingNumber(first,last){
-    if(first === last){
-        return 1;
-    }
-    else if(last === 1){
-        return 1;
-    }else if(first-1 === last){
-        return calculateCombination(first,2);
-    }   
-    return stirlingNumber(first-1, last-1)+ last*stirlingNumber(first-1,last);
 }
