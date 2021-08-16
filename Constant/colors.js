@@ -1,8 +1,8 @@
 module.exports = colors = {
     "Black" : "#000000",
     "Navy":"#23374D",
-    "Pink":"#FFB6C1",
-    "SkyBlue":"#87CEFA",
+    "Pink":"#dc0092",
+    "SkyBlue":"#039ad2",
     "Orange":"#FF8C00",
     "Green":"#008000",
     "Brown":"#8B4513",

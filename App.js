@@ -4,12 +4,25 @@ import Main from './Component/Main';
 import { createStackNavigator } from '@react-navigation/stack';
 import Setting from './Component/Setting';
 import History from './Component/History';
-import MMKVStorage from "react-native-mmkv-storage";
+import SplashScreen from 'react-native-splash-screen';
+import { BackHandler } from 'react-native';
 const Stack = createStackNavigator();
 
 
 export default function App() {
- 
+  //스플래시 액티비티 종료
+  useEffect(() => {
+
+    SplashScreen.hide();
+
+  }, []);
+  //Android HardWareButton Locked
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true)
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => true)
+  }, [])
+
   
     return (
       <NavigationContainer>

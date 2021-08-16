@@ -12,7 +12,7 @@ const tokenH = {
         show:"H",
         value:function(a,b){
             
-            return calculateCombinationwithRepetition(a,b);
+            return calculateCombinationwithRepetition(parseInt(a),parseInt(b));
         }
     
 }
@@ -24,7 +24,7 @@ const tokenpi = {
         show:"π",
         value:function(a,b){
             
-            return calculatePermutationwithRepetition(a,b);
+            return calculatePermutationwithRepetition(parseInt(a),parseInt(b));
         }
 
 }
@@ -36,7 +36,7 @@ const tokenS = {
     token:"S",
     show:"S",
     value:function(a,b){
-        return stirlingNumber(a,b);
+        return stirlingNumber(parseInt(a),parseInt(b));
     }
 }
 

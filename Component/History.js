@@ -63,7 +63,6 @@ export default function History({navigation}){
         justifyContent: 'center',
         alignItems: 'center',
       },title:{
-        flex:8,
         margin:5,
         justifyContent: 'center',
         alignItems: 'center',
@@ -72,9 +71,9 @@ export default function History({navigation}){
         fontSize:23
       },settingimage:{
         resizeMode:'contain',
-        height:"50%",
+        height:"70%",
         width:"50%",
-      }, imageStyle:{
+      },imageStyle:{
         marginLeft:15,
         marginRight:20,
         alignSelf:'center',

@@ -3,17 +3,15 @@ import React, {useState,useEffect} from 'react';
 import * as mathstr from "math-expression-evaluator";
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
-  Alert,
   TouchableOpacity,
   Image,
-  Asyncs
+  BackHandler,
+  Alert
 } from 'react-native';
+import perf from '@react-native-firebase/perf';
 import Banner from  './Banner/Banner'
 import tokens from '../Constant/token';
 import CalButton from './Button/CalButton'
@@ -39,26 +37,34 @@ export default function Main({navigation,route}){
   //const [unit, setUnit] = useState({firstnum:"0", lastnum:"", operator:"",secondop:""})
   const [color, setColor] = useState("#FFFFFF");
 
+  
+
   useEffect(()=>{
     if(route.params?.color){
       setColor(route.params?.color);
     }
   },[route.params?.color])
 
+  
+
   useEffect(()=>{
     const MMKV = new MMKVStorage.Loader().initialize();
     MMKV.indexer.strings.hasKey("theme").then(async (result) => {
-      console.log("Main.js/"+"result : "+result)
+      //console.log("Main.js/"+"result : "+result)
       if (!result) {
         await MMKV.setStringAsync("theme", "Navy").then(async ()=>{
-          console.log("Main.js/[NORESULT]"+"theme : " + await MMKV.getStringAsync("theme"));
+          //초기 화면 설정에 대한 해결책
+          await MMKV.getStringAsync("theme").then(res=>{
+            //console.log("Main.js/"+"color : "+colors[res])
+            setColor(colors[res]);
+          });
 
         })
         .catch(err=>console.log(err));
       }
       else{
         await MMKV.getStringAsync("theme").then(res=>{
-          console.log("Main.js/"+"color : "+colors[res])
+          //console.log("Main.js/"+"color : "+colors[res])
           setColor(colors[res]);
         });
       }
@@ -115,7 +121,7 @@ export default function Main({navigation,route}){
       alignItems: 'center',
       fontFamily:'NeoDunggeunmoCode-Regular',
       color: 'white',
-      fontSize:23,
+      fontSize:20,
     },settingimage:{
       resizeMode:'contain',
       height:"50%",
@@ -126,7 +132,40 @@ export default function Main({navigation,route}){
   //   let strings = await MMKV.indexer.strings.getAll();
   //   return strings;
   // }
-  
+  const showCalAlert = (string) => {
+        
+    //console.log("showCalAlert",string)
+    Alert.alert(
+        "Calculation Error",
+        string,[
+       {
+           text: "확인",
+           onPress: () => {},
+           style: "cancel",
+       }],
+       {cancelable:true}
+    )
+  }
+  const showOffAlert = () => {
+        
+    //console.log("showCalAlert",string)
+    Alert.alert(
+        "앱을 종료하시겠습니까?",
+        "",[
+       {
+           text: "취소",
+           onPress: () => {},
+           style: "cancel",
+       },
+       {
+        text: "종료",
+        onPress: () => {BackHandler.exitApp()},
+        
+        }],
+       {cancelable:true}
+    )
+  }
+
   const saveData = async (resultstr,temp) => {
     const date = moment().format('YYYY-MM-DD HH:mm:ss').toString();
     await MMKV.setStringAsync(date, temp.concat("=",resultstr)).then(
@@ -148,14 +187,18 @@ export default function Main({navigation,route}){
     if(data === '='){
       
         let resulttemp= result;
+        
         let temp = result.replace(/×/gi,"*");
         temp = temp.replace(/÷/gi,"/");
         try{
+          const trace = await perf().startTrace('calculation_trace');
           mathstr.addToken([tokens.tokenH,tokens.tokenpi, tokens.tokenS]);
           const resultstr = mathstr.eval(temp);
           saveData(resultstr,resulttemp);
+          await trace.stop();
         }catch(e){
-          console.log(e);
+          showCalAlert(e.message);
+          
         }
     }
     else if(data ==='AC'){
@@ -228,8 +271,11 @@ function renderText(){
             <TouchableOpacity style={styles.settingbutton} onPress={()=>navigation.navigate('Setting')}>
              <Image style = {styles.settingimage} source={require('../icon/setting.png')} />
             </TouchableOpacity>
+            <TouchableOpacity style={styles.settingbutton} onPress={()=>showOffAlert()}>
+             <Image style = {styles.settingimage} source={require('../icon/exit.png')} />
+            </TouchableOpacity>
           </View>
-          <Banner></Banner>
+          
           <View style = {styles.resultContainer}>
             <Text style = {styles.resultText} >
               {renderText()}
@@ -238,6 +284,8 @@ function renderText(){
           <View style = {styles.buttonContainer}>
             {renderButtonLayout()}
           </View>
+          
+          <Banner></Banner>
       </View>
     </SafeAreaView>
 

@@ -76,15 +76,16 @@ export default function HistoryItem({color, date, string, deleteItem}){
                 style: "cancel",
             },
             
+            
+            {
+                text: "복사",
+                onPress: () => {copyToClipboard(string)},
+            },
             {
                 text:"삭제",
                 //자식->부모 props전달ㅎㅎ 이제 완벽 활용 가능!
                 onPress: () => {deleteItem(date)},
-                style:'default'
-            },
-            {
-                text: "복사",
-                onPress: () => {copyToClipboard(string)},
+                
             },
             ],
             {

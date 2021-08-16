@@ -17,6 +17,7 @@
     "@react-native-firebase/analytics": "^11.2.0",
     "@react-native-firebase/app": "^11.2.0",
     "@react-native-firebase/crashlytics": "^11.2.0",
+    "@react-native-firebase/perf": "^12.5.0",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
     "expo-asset": "^8.2.0",
@@ -32,6 +33,7 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
     "react-native-settings-list": "^1.8.0",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-web": "^0.14.7",
     "styled-components": "^5.2.3"
   },
