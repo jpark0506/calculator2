@@ -35,7 +35,7 @@ export default function Main({navigation,route}){
   
   const MMKV = new MMKVStorage.Loader().initialize();
   //const [unit, setUnit] = useState({firstnum:"0", lastnum:"", operator:"",secondop:""})
-  const [color, setColor] = useState("#FFFFFF");
+  const [color, setColor] = useState("#23374D");
 
   
 
