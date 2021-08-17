@@ -1,4 +1,4 @@
-package com.reanimated2playground;
+package com.statisticcalculator;
 
 import android.app.Application;
 import android.content.Context;

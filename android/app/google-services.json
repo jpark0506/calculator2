@@ -29,6 +29,49 @@
             {
               "client_id": "639256114077-cpimkr6911ugnkij6kn5lqolht8ua7nq.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "639256114077-5g6ei2qbfo771qo88lq8pgkq2h268sso.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Reanimated2Playground"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639256114077:android:aa782eee5e1b7cf2563574",
+        "android_client_info": {
+          "package_name": "com.statisticcalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639256114077-cpimkr6911ugnkij6kn5lqolht8ua7nq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8_CwZX_K4nMOiumaQVICONok1B581oU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639256114077-cpimkr6911ugnkij6kn5lqolht8ua7nq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "639256114077-5g6ei2qbfo771qo88lq8pgkq2h268sso.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Reanimated2Playground"
+              }
             }
           ]
         }

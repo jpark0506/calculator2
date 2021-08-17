@@ -134,7 +134,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.reanimated2playground"
+        applicationId "com.statisticcalculator"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

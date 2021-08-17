@@ -1,8 +1,8 @@
 {
-  "name": "Reanimated2Playground",
+  "name": "statisticcalculator",
   "displayName": "확통 계산기 2.0",
   "expo": {
-    "name": "Reanimated2Playground",
+    "name": "statisticcalculator",
     "privacy": "unlisted",
     "sdkVersion": "34.0.0",
     "version": "1.0.0",
