@@ -1,18 +1,29 @@
-import React from 'react'
+import React from 'react';
+import {View} from 'react-native';
 import { TestIds, BannerAd, BannerAdSize} from '@react-native-firebase/admob';
-function Banner() {
-    return (
-        <BannerAd
-        unitId={TestIds.BANNER}
-        size={BannerAdSize.SMART_BANNER}
-        requestOptions={{
-        requestNonPersonalizedAdsOnly: true,}}
-        onAdLoaded={() => {
-        console.log('Advert loaded');}}
-        onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);}}
-        />
-    )
+import  unit_id  from '../../Constant/id';
+function Banner({devmode}) {
+    if(devmode){
+        return(
+            <View>
+
+            </View>
+        )
+    }else{
+        return (
+            <BannerAd
+            unitId={unit_id}
+            size={BannerAdSize.SMART_BANNER}
+            requestOptions={{
+            requestNonPersonalizedAdsOnly: true,}}
+            onAdLoaded={() => {
+            console.log('Advert loaded');}}
+            onAdFailedToLoad={(error) => {
+            console.error('Advert failed to load: ', error);}}
+            />
+        )
+    }
+    
 }
 
 export default Banner

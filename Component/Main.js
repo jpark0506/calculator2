@@ -265,6 +265,7 @@ function renderText(){
             <Text style = {styles.title}>
               확통계산기 2.0
             </Text>
+            
             <TouchableOpacity style={styles.settingbutton} onPress={()=>navigation.navigate('History')}>
              <Image style = {styles.settingimage} source={require('../icon/history.png')} />
             </TouchableOpacity>
@@ -285,7 +286,7 @@ function renderText(){
             {renderButtonLayout()}
           </View>
           
-          <Banner></Banner>
+          <Banner devmode = {false}></Banner>
       </View>
     </SafeAreaView>
 

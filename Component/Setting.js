@@ -132,11 +132,14 @@ export default function Setting({navigation}){
           <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
             Dev Platform: React Native
           </Text>
-          <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+          <Text style={{margin:5,fontSize:10, fontFamily:'NeoDunggeunmoCode-Regular'}}>
             BugReport: junhyuk.park52@gmail.com
           </Text>
-          <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+          <Text style={{margin:5,fontSize:10, fontFamily:'NeoDunggeunmoCode-Regular'}}>
             Dev Email: junhyuk.park52@gmail.com
+          </Text>
+          <Text style={{margin:5,fontSize:10, fontFamily:'NeoDunggeunmoCode-Regular'}}>
+            Icon Designer Email: wjdgks3264@naver.com
           </Text>
       </View>
     )
