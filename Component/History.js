@@ -197,7 +197,7 @@ export default function History({navigation}){
           },
           {
             text: "취소",
-            onPress: () => Alert.alert("Cancel Pressed"),
+            onPress: () => {},
             style: "cancel",
         },
           

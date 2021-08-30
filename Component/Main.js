@@ -190,8 +190,8 @@ export default function Main({navigation,route}){
         
         let temp = result.replace(/×/gi,"*");
         temp = temp.replace(/÷/gi,"/");
+        const trace = await perf().startTrace('calculation_trace');
         try{
-          const trace = await perf().startTrace('calculation_trace');
           mathstr.addToken([tokens.tokenH,tokens.tokenpi, tokens.tokenS]);
           const resultstr = mathstr.eval(temp);
           saveData(resultstr,resulttemp);
