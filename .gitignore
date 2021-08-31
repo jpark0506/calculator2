@@ -59,6 +59,10 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
+#Constant
+Constant/id.js
+
+#Java Error
 android/java_pid4991.hprof
 
 #firebase
