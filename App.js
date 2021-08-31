@@ -6,6 +6,7 @@ import Setting from './Component/Setting';
 import History from './Component/History';
 import SplashScreen from 'react-native-splash-screen';
 import { BackHandler } from 'react-native';
+import HOC from './hoc/HOC';
 const Stack = createStackNavigator();
 
 
@@ -28,13 +29,13 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Main" 
-            component={Main}
+            component={HOC(Main)}
             options={{headerShown : false}} />
           <Stack.Screen name="Setting" 
-            component={Setting} 
+            component={HOC(Setting)} 
             options={{headerShown : false}} />
             <Stack.Screen name="History" 
-            component={History} 
+            component={HOC(History)} 
             options={{headerShown : false}} />
         </Stack.Navigator>
       </NavigationContainer>
