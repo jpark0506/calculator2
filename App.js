@@ -11,6 +11,7 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
+  const devmode = false;
   //스플래시 액티비티 종료
   useEffect(() => {
 
@@ -29,13 +30,13 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Main" 
-            component={HOC(Main)}
+            component={HOC(Main,devmode)}
             options={{headerShown : false}} />
           <Stack.Screen name="Setting" 
-            component={HOC(Setting)} 
+            component={HOC(Setting,devmode)} 
             options={{headerShown : false}} />
             <Stack.Screen name="History" 
-            component={HOC(History)} 
+            component={HOC(History,devmode)} 
             options={{headerShown : false}} />
         </Stack.Navigator>
       </NavigationContainer>

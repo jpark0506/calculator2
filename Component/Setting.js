@@ -14,7 +14,7 @@ import SettingsList from 'react-native-settings-list';
 import colors from '../Constant/colors';
 import Banner from './Banner/Banner';
 
-export default function Setting({navigation}){
+export default function Setting({navigation,devmode}){
 
 
   const [themeModalVisible, setThemeModalVisible] = useState(false);
@@ -342,7 +342,7 @@ export default function Setting({navigation}){
               </View>
           </Modal>
         </View>
-         <Banner>
+         <Banner devmode={devmode}>
 
          </Banner>
     </SafeAreaView>)

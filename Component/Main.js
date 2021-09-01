@@ -30,7 +30,7 @@ const list = [
   [0,".","=","÷","!"],
 ]
 
-export default function Main({navigation,route}){
+export default function Main({navigation,route,devmode}){
   const [result, setResult] = useState(0)
   
   const MMKV = new MMKVStorage.Loader().initialize();
@@ -286,7 +286,7 @@ function renderText(){
             {renderButtonLayout()}
           </View>
           
-          <Banner devmode = {false}></Banner>
+          <Banner devmode = {devmode}></Banner>
       </View>
     </SafeAreaView>
 

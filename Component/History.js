@@ -18,7 +18,7 @@ import HistoryItem from './Item/HistoryItem';
 import Banner from './Banner/Banner';
 import MMKVStorage from "react-native-mmkv-storage";
 
-export default function History({navigation}){
+export default function History({navigation,devmode}){
 
   const MMKV = new MMKVStorage.Loader().initialize();
 
@@ -224,7 +224,7 @@ export default function History({navigation}){
         <View style =  {styles.view}>
           {renderList()}
         </View>
-        <Banner>
+        <Banner devmode={devmode}>
 
         </Banner>
     </SafeAreaView>)
