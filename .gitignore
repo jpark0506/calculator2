@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+#firebase
+firebase.json
+
 # Xcode
 #
 build/
@@ -60,10 +63,9 @@ buck-out/
 /ios/Pods/
 
 #Constant
-Constant/id.js
+/Constant/id.js
 
 #Java Error
 android/java_pid4991.hprof
 
-#firebase
-firebase.json
+

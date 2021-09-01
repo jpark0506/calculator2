@@ -1,4 +1,3 @@
-import {createOneButtonDialog} from './Util';
 export const factorial = (data) =>{
     let result=1;
     for(i=1; i<=data; i++){

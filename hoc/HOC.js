@@ -7,7 +7,7 @@ function HOC(FilterComponent,devmode) {
         return <FilterComponent
         navigation = {props.navigation} 
         route = {props.route}
-        devmode={props.devmode}></FilterComponent>
+        devmode={devmode}></FilterComponent>
     }
     return DevController
 }

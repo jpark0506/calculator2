@@ -170,7 +170,7 @@ export default function Main({navigation,route,devmode}){
     const date = moment().format('YYYY-MM-DD HH:mm:ss').toString();
     await MMKV.setStringAsync(date, temp.concat("=",resultstr)).then(
       ()=>{
-        console.log(resultstr);
+        //console.log(resultstr);
         setResult(resultstr);
       }
     ).catch(error => {

@@ -89,17 +89,17 @@ export default function History({navigation,devmode}){
       const MMKV = new MMKVStorage.Loader().initialize();
       
       MMKV.indexer.strings.hasKey("theme").then(async (result) => {
-        console.log("History.js/"+"result : "+result)
+        //console.log("History.js/"+"result : "+result)
         if (!result) {
           //default color setting
           await MMKV.setStringAsync("theme", "Navy").then(async ()=>{
-            console.log("History.js/"+"theme : " + await MMKV.getStringAsync("theme"));
+            //console.log("History.js/"+"theme : " + await MMKV.getStringAsync("theme"));
   
           })
           .catch(err=>console.log(err));
         }else{
           await MMKV.getStringAsync("theme").then(res=>{
-            console.log("History.js/"+"color : "+colors[res])
+            //console.log("History.js/"+"color : "+colors[res])
             setColor(colors[res]);
           })
         }
@@ -111,7 +111,8 @@ export default function History({navigation,devmode}){
     //초기 Data 로딩
     useEffect(()=>{
       try{
-        getData().then(results=>{console.log(results)
+        getData().then(results=>{
+          //console.log(results)
           setHistory(results.reverse())})
       
       }catch(error){
@@ -142,8 +143,6 @@ export default function History({navigation,devmode}){
           strings = strings.filter(item=>item[1]!==null)
           strings = strings.filter(item=>item[0]!=="theme")
         }
-        
-        
         return strings
       }catch(err){
         console.error(err)

@@ -29,16 +29,16 @@ export default function Setting({navigation,devmode}){
 
   useEffect(()=>{
     MMKV.indexer.strings.hasKey("theme").then(async (result) => {
-      console.log("Setting.js/"+"result : "+result)
+      //console.log("Setting.js/"+"result : "+result)
       if (!result) {
         //default color setting
         await MMKV.setStringAsync("theme", "Navy").then(async ()=>{
-          console.log("Setting.js/"+"theme : " + await MMKV.getStringAsync("theme"));
+          //console.log("Setting.js/"+"theme : " + await MMKV.getStringAsync("theme"));
         })
         .catch(err=>console.log(err));
       }else{
         await MMKV.getStringAsync("theme").then(res=>{
-          console.log("Setting.js/"+"color : "+colors[res])
+          //console.log("Setting.js/"+"color : "+colors[res])
           setColor(colors[res]);
         })
       }
@@ -49,9 +49,9 @@ export default function Setting({navigation,devmode}){
 
   const saveColorData = async (color) => {
     await MMKV.setStringAsync("theme", color).then(async ()=>{
-      console.log("History.js/"+"theme : " + await MMKV.getStringAsync("theme"));
+      //console.log("History.js/"+"theme : " + await MMKV.getStringAsync("theme"));
       await MMKV.getStringAsync("theme").then(res=>{
-        console.log("History.js/"+"color : "+colors[res])
+        //console.log("History.js/"+"color : "+colors[res])
         setColor(colors[res]);
       })
     })
@@ -124,7 +124,7 @@ export default function Setting({navigation,devmode}){
             Info
           </Text>
           <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
-            App Version: 2.0.0(alpha)
+            App Version: 2.0.0
           </Text>
           <Text style={{margin:5,fontSize:15, fontFamily:'NeoDunggeunmoCode-Regular'}}>
             App Name: 확통 계산기 2.0
@@ -163,17 +163,17 @@ export default function Setting({navigation,devmode}){
   }
 
   const toggleInfoModal = () => {
-    console.log("info toggled");
+    //console.log("info toggled");
     setInfoModalVisible(!infoModalVisible);
   }
 
   const toggleCInfoModal = () => {
-    console.log("Cinfo toggled");
+    //console.log("Cinfo toggled");
     setCInfoModalVisible(!cInfoModalVisible);
   }
 
   const toggleThemeModal = () => {
-    console.log("theme toggled");
+    //console.log("theme toggled");
     setThemeModalVisible(!themeModalVisible);
   }
 
