@@ -1,8 +1,8 @@
-import {Alert} from 'react-native'
-import {calculateCombination, calculateCombinationwithRepetition, calculatePermutation, calculatePermutationwithRepetition} from './CalUtils'
-import MMKVStorage from "react-native-mmkv-storage";
-import moment from 'moment';
-import 'moment/locale/ko';
+// import {Alert} from 'react-native'
+// import {calculateCombination, calculateCombinationwithRepetition, calculatePermutation, calculatePermutationwithRepetition} from './CalUtils'
+// import MMKVStorage from "react-native-mmkv-storage";
+// import moment from 'moment';
+// import 'moment/locale/ko';
 // export function calculateResult(unit){
 //     //toFixed(args) == 소수점 처리
 //     if(unit.operator == "+"){

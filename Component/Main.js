@@ -22,8 +22,8 @@ import { handleTextLength} from '../Utils/Util'
 import colors from '../Constant/colors';
 
 const list = [
-  ["AC","sin","cos","tan","e"],
-  ["ln","(",",",")","S","H"],
+  ["AC","sin","cos","tan","<-"],
+  ["(",",",")","S","H"],
   [7,8,9,"+","P"],
   [4,5,6,"-","C"],
   [1,2,3,"×","π"],
@@ -204,8 +204,16 @@ export default function Main({navigation,route,devmode}){
     else if(data ==='AC'){
       setResult(0);
     }
-    else if(data ==='C.'){
-      setResult(0);
+    else if(data ==="<-"){
+      if(result!==0 || result !=="0"){
+        if(result.length===1){
+          setResult(0)
+        }else{
+          setResult(result.slice(0,result.length-1));
+        }
+        
+      }
+      
     }
     else{
       if(result === 0){
