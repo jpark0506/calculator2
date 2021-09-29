@@ -12,11 +12,9 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const devmode = false;
-  //스플래시 액티비티 종료
+  //exit SplashScreen
   useEffect(() => {
-
     SplashScreen.hide();
-
   }, []);
   //Android HardWareButton Locked
   useEffect(() => {
