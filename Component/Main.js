@@ -37,7 +37,6 @@ export default function Main({navigation,route,devmode}){
   //const [unit, setUnit] = useState({firstnum:"0", lastnum:"", operator:"",secondop:""})
   const [color, setColor] = useState("#23374D");
 
-  
 
   useEffect(()=>{
     if(route.params?.color){

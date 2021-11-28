@@ -6,12 +6,11 @@ import Setting from './Component/Setting';
 import History from './Component/History';
 import SplashScreen from 'react-native-splash-screen';
 import { BackHandler } from 'react-native';
-import HOC from './hoc/HOC';
+
+
 const Stack = createStackNavigator();
 
-
 export default function App() {
-  const devmode = false;
   //exit SplashScreen
   useEffect(() => {
     SplashScreen.hide();
@@ -28,13 +27,13 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Main" 
-            component={HOC(Main,devmode)}
+            component={Main}
             options={{headerShown : false}} />
           <Stack.Screen name="Setting" 
-            component={HOC(Setting,devmode)} 
+            component={Setting} 
             options={{headerShown : false}} />
             <Stack.Screen name="History" 
-            component={HOC(History,devmode)} 
+            component={History} 
             options={{headerShown : false}} />
         </Stack.Navigator>
       </NavigationContainer>
